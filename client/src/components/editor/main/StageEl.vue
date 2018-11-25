@@ -5,11 +5,14 @@ import { _clearSelectedElements, _addSelectedElement } from '@/store/types'
 import MrEl from '@/components/editor/common/mr-vue/MrEl'
 import StageEl from './StageEl'
 
+import VueSVGIcon from 'vue-svgicon'          // Wraps SVGs into Vue components allowing you to inject raw SVG into the DOM
+
 export default {
   name: 'stage-el',
   props: ['elem', 'isPlain'],
-  components: { MrEl },
+  components: { MrEl, VueSVGIcon },
   render: function (createElement) {
+    // Dunno what 'global' is...
     let elementO = (this.elem.global) ? {...this.elem, ...this.componentRef, id: this.elem.id} : this.elem
 
     let styles = elementO.styles
@@ -59,6 +62,7 @@ export default {
 
     let stageElem
     if (this.isPlain) {
+      // So far haven't found anything that 'isPlain'
       stageElem = createElement(elementO.type, data, children)
     } else {
       let mrElProps = {
@@ -77,7 +81,9 @@ export default {
       stageElem = createElement(MrEl, {
         'props': (elementO.global) ? {...mrElProps, handles: null} : mrElProps,
         'on': { activated: this.activatedHandler }
-      }, [ createElement(elementO.type, data, children) ])
+         // This is where the <slot> in MrEl is created
+//      }, [ createElement(elementO.type, data, children) ])
+      }, [ createElement(VueSVGIcon, {attrs: {name: 'system/elements/' + elementO.name, id: elementO.id}}) ])
     }
 
     return stageElem

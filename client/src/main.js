@@ -1,7 +1,7 @@
 import Vue from 'vue'
-import VueSVGIcon from 'vue-svgicon'
-import VueMDCAdapter from 'vue-mdc-adapter'
-import Tooltip from 'vue-directive-tooltip'
+import VueSVGIcon from 'vue-svgicon'          // Wraps SVGs into Vue components allowing you to inject raw SVG into the DOM
+import VueMDCAdapter from 'vue-mdc-adapter'   // Wraps bootstrap elements
+import Tooltip from 'vue-directive-tooltip'   // Fancy tooltips
 
 import localforage from 'localforage'
 

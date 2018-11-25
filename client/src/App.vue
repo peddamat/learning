@@ -11,6 +11,7 @@
         <p><b>NOTE</b>: As for today, vuegg does not support touch devices.</p>
       </div>
     </div>
+    <!-- The default route loads an Editor component -->
     <router-view></router-view>
   </div>
 </template>
@@ -24,7 +25,7 @@ import '@/assets/icons/product/vuegg'
 
 export default {
   name: 'app',
-  mixins: [redoundo],
+  mixins: [redoundo],  // Handles undo-redo functionality
   mounted: function () {
     this.initializeState()
     this.loadVueggProject({origin: 'local'})
