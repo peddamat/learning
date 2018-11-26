@@ -59,6 +59,7 @@ import materialComponents from '@/assets/MaterialComponents'
 import MenuToggle from '@/components/editor/common/MenuToggle'
 
 import '@/assets/icons/system/elements/'
+import '@/assets/icons/fontawesome/'
 
 var icon = require('vue-svgicon')
 export default {
