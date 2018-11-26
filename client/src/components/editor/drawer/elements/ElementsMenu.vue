@@ -3,14 +3,14 @@
     <menu-toggle menuHeader="Basic">
       <div class="el-menu">
         <div class="el-menu__el" :key="element.name"
-          v-for="element in elements"
-          :title="element.name"
+          v-for="(element, value) in elements"
+          :title="value"
           draggable="true"
-          @dragstart="e => dragstartHandler(e, element)"
-          @click="e => addItemToStage(e, element)"
+          @dragstart="e => dragstartHandler(e, element, value)"
+          @touchstart ="e => dragstartHandler(e, element, value)"
+          @click="e => addItemToStage(e, element, value)"
         >
-          <svgicon :icon="'system/elements/'+element.name" width="24" height="24" color="rgba(0,0,0,.87)"></svgicon>
-          <span>{{element.displayName || element.name}}</span>
+          <svgicon :icon="value" width="24" height="24" color="rgba(0,0,0,.87)"></svgicon>
         </div>
       </div>
     </menu-toggle>
@@ -21,11 +21,11 @@
           v-for="mdComp in mdComponents"
           :title="mdComp.name"
           draggable="true"
-          @dragstart="e => dragstartHandler(e, mdComp)"
-          @click="e => addItemToStage(e, mdComp)"
+          @dragstart="e => dragstartHandler(e, mdComp, value)"
+          @touchstart="e => dragstartHandler(e, mdComp, value)"
+          @click="e => addItemToStage(e, mdComp, value)"
         >
           <svgicon :icon="'system/elements/'+mdComp.iconName" width="24" height="24" color="rgba(0,0,0,.87)"></svgicon>
-          <span>{{mdComp.displayName || mdComp.name}}</span>
         </div>
       </div>
     </menu-toggle>
@@ -53,19 +53,20 @@
 import { mapState, mapActions } from 'vuex'
 import { registerElement } from '@/store/types'
 
-import basicElements from '@/assets/BasicElements'
+// import basicElements from '@/assets/BasicElements'
 import materialComponents from '@/assets/MaterialComponents'
 // import mockComponents from '@/assets/MockComponents'
 import MenuToggle from '@/components/editor/common/MenuToggle'
 
 import '@/assets/icons/system/elements/'
 
+var icon = require('vue-svgicon')
 export default {
   name: 'elements-menu',
   components: { MenuToggle },
   data: function () {
     return {
-      elements: basicElements,
+      elements: icon.icons,
       mdComponents: materialComponents
       // components: mockComponents
     }
@@ -76,13 +77,15 @@ export default {
     })
   },
   methods: {
-    dragstartHandler (e, item) {
+    dragstartHandler (e, item, value) {
+      item.name = value
       e.dataTransfer.dropEffect = 'copy'
       e.dataTransfer.effectAllowed = 'all'
       e.dataTransfer.setData('text/plain', JSON.stringify(this.initItem(item)))
     },
 
-    addItemToStage (e, item) {
+    addItemToStage (e, item, value) {
+      item.name = value
       this.registerElement({pageId: this.activePage.id, el: this.initItem(item), global: e.shiftKey})
     },
 

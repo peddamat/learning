@@ -83,7 +83,7 @@ export default {
         'on': { activated: this.activatedHandler }
          // This is where the <slot> in MrEl is created
 //      }, [ createElement(elementO.type, data, children) ])
-      }, [ createElement(VueSVGIcon, {attrs: {name: 'system/elements/' + elementO.name, id: elementO.id}}) ])
+      }, [ createElement(VueSVGIcon, {attrs: {name: elementO.name, id: elementO.id}}) ])
     }
 
     return stageElem
