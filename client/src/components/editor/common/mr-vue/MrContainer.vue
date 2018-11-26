@@ -3,6 +3,7 @@
     class="mr-container"
     tabindex="0"
     @touchmove.capture="mouseDownHandler"
+    @mousedown.capture="mouseDownHandler"
     @keydown.esc.stop.prevent="$emit('clearselection')"
     @keydown.delete.exact.stop.prevent="$emit('delete')"
     @keydown.ctrl.67.exact.stop.prevent="$emit('copy')"
@@ -81,6 +82,11 @@ export default {
       }
 
       if (isMrs) {
+        // Support mouse events
+        document.documentElement.addEventListener('mousemove', this.mouseMoveHandler, true)
+        document.documentElement.addEventListener('mouseup', this.mouseUpHandler, true)
+
+        // Support mobile touch events
         document.documentElement.addEventListener('touchmove', this.mouseMoveHandler, true)
         document.documentElement.addEventListener('touchend', this.mouseUpHandler, true)
       }
@@ -247,7 +253,11 @@ export default {
     },
 
     getMouseAbsPoint (e) {
-      return {x: e.touches[0].clientX, y: e.touches[0].clientY}
+      if (e.type === 'mousedown' || e.type === 'mousemove') {
+        return {x: e.clientX, y: e.clientY}
+      } else {
+        return {x: e.touches[0].clientX, y: e.touches[0].clientY}
+      }
     },
 
     getMouseRelPoint (e) {

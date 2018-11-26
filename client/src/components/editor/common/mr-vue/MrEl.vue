@@ -2,6 +2,7 @@
   <div data-mr-el="true"
     class="mr-el"
     :style="style"
+    @mousedown ="e => $emit('activated', e)"
     @touchstart.prevent ="e => $emit('activated', e)"
     @mousedown.meta.capture="e => $emit('activated', e)"
     @mousedown.ctrl.capture="e => $emit('activated', e)"
