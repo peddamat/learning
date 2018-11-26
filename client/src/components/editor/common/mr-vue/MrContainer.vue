@@ -2,7 +2,7 @@
   <div data-mr-container="true"
     class="mr-container"
     tabindex="0"
-    @mousedown.capture="mouseDownHandler"
+    @touchmove.capture="mouseDownHandler"
     @keydown.esc.stop.prevent="$emit('clearselection')"
     @keydown.delete.exact.stop.prevent="$emit('delete')"
     @keydown.ctrl.67.exact.stop.prevent="$emit('copy')"
@@ -64,22 +64,25 @@ export default {
       this.initialAbsPos = this.currentAbsPos = this.getMouseAbsPoint(e)
       this.initialRelPos = this.currentRelPos = this.getMouseRelPoint(e)
 
+      // Clear the selection if they click the background
       if (e.target.dataset.mrContainer) {
         this.$emit('clearselection')
         this.renderSelectionArea({x: -1, y: -1}, {x: -1, y: -1})
         isMrs = this.selecting = true
+      // Start resizing if they click a resize handle
       } else if (e.target.dataset.mrHandle) {
         isMrs = this.resizing = true
         this.handle = e.target.classList[1]
         // this.$emit('resizestart')
+      // Start moving if they click an element
       } else if (this.getParentMr(e.target)) {
         isMrs = this.moving = true
         // this.$emit('movestart')
       }
 
       if (isMrs) {
-        document.documentElement.addEventListener('mousemove', this.mouseMoveHandler, true)
-        document.documentElement.addEventListener('mouseup', this.mouseUpHandler, true)
+        document.documentElement.addEventListener('touchmove', this.mouseMoveHandler, true)
+        document.documentElement.addEventListener('touchend', this.mouseUpHandler, true)
       }
     },
 
@@ -244,7 +247,7 @@ export default {
     },
 
     getMouseAbsPoint (e) {
-      return {x: e.clientX, y: e.clientY}
+      return {x: e.touches[0].clientX, y: e.touches[0].clientY}
     },
 
     getMouseRelPoint (e) {
