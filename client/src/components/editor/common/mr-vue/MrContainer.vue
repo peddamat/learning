@@ -2,7 +2,6 @@
   <div data-mr-container="true"
     class="mr-container"
     tabindex="0"
-    @mousedown.capture="mouseDownHandler"
     @keydown.esc.stop.prevent="$emit('clearselection')"
     @keydown.delete.exact.stop.prevent="$emit('delete')"
     @keydown.ctrl.67.exact.stop.prevent="$emit('copy')"

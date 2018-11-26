@@ -30,6 +30,7 @@
       </div>
     </menu-toggle>
 
+    <menu-toggle menuHeader="Other" />
     <!-- TODO: v-for components (community/personal) retrieved from GH? -->
     <!-- <menu-toggle menuHeader="Community Components" :startClosed="true">
       <div class="el-menu">
@@ -84,6 +85,9 @@ export default {
       e.dataTransfer.setData('text/plain', JSON.stringify(this.initItem(item)))
     },
 
+    dragstartHandler2 (e, item, value) {
+      alert('touch!')
+    },
     addItemToStage (e, item, value) {
       item.name = value
       this.registerElement({pageId: this.activePage.id, el: this.initItem(item), global: e.shiftKey})

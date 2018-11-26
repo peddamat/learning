@@ -1,10 +1,7 @@
 <template>
   <div data-mr-el="true"
-    class="mr-el"
+    class="mr-el interact"
     :style="style"
-    @mousedown="e => $emit('activated', e)"
-    @mousedown.meta.capture="e => $emit('activated', e)"
-    @mousedown.ctrl.capture="e => $emit('activated', e)"
   >
     <!-- IMPORTANT! KEEP SLOT AS FIRST CHILD -->
     <slot></slot>
@@ -25,8 +22,11 @@
 </template>
 
 <script>
+import VueInteract from 'vue-interact'
+
 export default {
   name: 'mr-el',
+  mixins: [VueInteract],
   props: {
     active: {
       type: Boolean,
