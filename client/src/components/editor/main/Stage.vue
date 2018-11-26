@@ -118,8 +118,11 @@ export default {
       const mainContainer = document.getElementById('main')
       let element = JSON.parse(e.dataTransfer.getData('text/plain'))
 
-      let height = getComputedProp('height', element, this.page)
-      let width = getComputedProp('width', element, this.page)
+      let height = 100
+      let width = 100
+
+      // let height = getComputedProp('height', element, this.page)
+      // let width = getComputedProp('width', element, this.page)
       let top = e.pageY + mainContainer.scrollTop - mainContainer.offsetTop - this.$el.offsetTop - (height / 2)
       let left = e.pageX + mainContainer.scrollLeft - mainContainer.offsetLeft - this.$el.offsetLeft - (width / 2)
 
